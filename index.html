@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Pokemon Clock">
+    <link rel="apple-touch-icon" href="icons/icon.svg">
+    <link rel="manifest" href="manifest.json">
+    <title>Pokemon Clock</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="pokeball-decoration top-left"></div>
+        <div class="pokeball-decoration top-right"></div>
+        <div class="pokeball-decoration bottom-left"></div>
+        <div class="pokeball-decoration bottom-right"></div>
+
+        <header class="header">
+            <div class="pokemon-sprite" id="pokemon-sprite"></div>
+            <h1 class="pokemon-title">Pokemon Clock</h1>
+            <div class="pokemon-sprite" id="pokemon-sprite-2"></div>
+        </header>
+
+        <main class="main-content">
+            <section class="clock-section">
+                <div class="time-display">
+                    <span id="hours">00</span>
+                    <span class="colon">:</span>
+                    <span id="minutes">00</span>
+                    <span class="colon">:</span>
+                    <span id="seconds">00</span>
+                </div>
+                <div class="period" id="period">AM</div>
+                <div class="date-display" id="date-display">Loading...</div>
+            </section>
+
+            <section class="calendar-section">
+                <div class="calendar-header">
+                    <button class="nav-btn" id="prev-month">&lt;</button>
+                    <h2 id="calendar-title">January 2026</h2>
+                    <button class="nav-btn" id="next-month">&gt;</button>
+                </div>
+                <div class="calendar-grid">
+                    <div class="day-header">Sun</div>
+                    <div class="day-header">Mon</div>
+                    <div class="day-header">Tue</div>
+                    <div class="day-header">Wed</div>
+                    <div class="day-header">Thu</div>
+                    <div class="day-header">Fri</div>
+                    <div class="day-header">Sat</div>
+                    <div id="calendar-days"></div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="pokemon-types">
+                <span class="type fire">Fire</span>
+                <span class="type water">Water</span>
+                <span class="type grass">Grass</span>
+                <span class="type electric">Electric</span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

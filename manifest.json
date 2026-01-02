@@ -1,0 +1,17 @@
+{
+    "name": "Pokemon Clock",
+    "short_name": "PokeClock",
+    "description": "A Pokemon-themed always-on clock and calendar",
+    "start_url": "./index.html",
+    "display": "fullscreen",
+    "orientation": "any",
+    "background_color": "#1a1a2e",
+    "theme_color": "#ffcb05",
+    "icons": [
+        {
+            "src": "icons/icon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml"
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background -->
+  <rect width="512" height="512" rx="80" fill="#1a1a2e"/>
+
+  <!-- Pokeball -->
+  <circle cx="256" cy="256" r="180" fill="#ff1a1a"/>
+  <rect x="76" y="246" width="360" height="20" fill="#1a1a1a"/>
+  <path d="M76 256 A180 180 0 0 1 436 256" fill="#ff1a1a"/>
+  <path d="M76 256 A180 180 0 0 0 436 256" fill="#ffffff"/>
+
+  <!-- Center button -->
+  <circle cx="256" cy="256" r="50" fill="#ffffff" stroke="#1a1a1a" stroke-width="12"/>
+  <circle cx="256" cy="256" r="30" fill="#1a1a1a"/>
+
+  <!-- Clock hands -->
+  <line x1="256" y1="256" x2="256" y2="200" stroke="#ffcb05" stroke-width="8" stroke-linecap="round"/>
+  <line x1="256" y1="256" x2="290" y2="280" stroke="#ffcb05" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="256" cy="256" r="8" fill="#ffcb05"/>
+</svg>
