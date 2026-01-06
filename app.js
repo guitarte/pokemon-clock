@@ -31,6 +31,58 @@
     var currentMonth = new Date().getMonth();
     var currentYear = new Date().getFullYear();
 
+    // Weather elements
+    var weatherTempEl = document.getElementById('weather-temp');
+    var weatherConditionEl = document.getElementById('weather-condition');
+    var weatherHighEl = document.getElementById('weather-high');
+    var weatherLowEl = document.getElementById('weather-low');
+    var weatherLocationEl = document.getElementById('weather-location');
+    var weatherIconEl = document.getElementById('weather-icon');
+
+    // Weather code descriptions and icons (WMO Weather interpretation codes)
+    var weatherCodes = {
+        0: { desc: 'Clear sky', icon: 'sun' },
+        1: { desc: 'Mainly clear', icon: 'sun' },
+        2: { desc: 'Partly cloudy', icon: 'partly-cloudy' },
+        3: { desc: 'Overcast', icon: 'cloudy' },
+        45: { desc: 'Foggy', icon: 'fog' },
+        48: { desc: 'Depositing fog', icon: 'fog' },
+        51: { desc: 'Light drizzle', icon: 'drizzle' },
+        53: { desc: 'Moderate drizzle', icon: 'drizzle' },
+        55: { desc: 'Dense drizzle', icon: 'drizzle' },
+        56: { desc: 'Freezing drizzle', icon: 'drizzle' },
+        57: { desc: 'Freezing drizzle', icon: 'drizzle' },
+        61: { desc: 'Slight rain', icon: 'rain' },
+        63: { desc: 'Moderate rain', icon: 'rain' },
+        65: { desc: 'Heavy rain', icon: 'rain' },
+        66: { desc: 'Freezing rain', icon: 'rain' },
+        67: { desc: 'Freezing rain', icon: 'rain' },
+        71: { desc: 'Slight snow', icon: 'snow' },
+        73: { desc: 'Moderate snow', icon: 'snow' },
+        75: { desc: 'Heavy snow', icon: 'snow' },
+        77: { desc: 'Snow grains', icon: 'snow' },
+        80: { desc: 'Slight showers', icon: 'rain' },
+        81: { desc: 'Moderate showers', icon: 'rain' },
+        82: { desc: 'Violent showers', icon: 'rain' },
+        85: { desc: 'Snow showers', icon: 'snow' },
+        86: { desc: 'Heavy snow showers', icon: 'snow' },
+        95: { desc: 'Thunderstorm', icon: 'storm' },
+        96: { desc: 'Thunderstorm with hail', icon: 'storm' },
+        99: { desc: 'Thunderstorm with hail', icon: 'storm' }
+    };
+
+    // Weather SVG icons
+    var weatherIcons = {
+        sun: '<svg viewBox="0 0 64 64" class="weather-svg"><circle cx="32" cy="32" r="14" fill="#ffcb05"/><g stroke="#ffcb05" stroke-width="3" stroke-linecap="round"><line x1="32" y1="8" x2="32" y2="14"/><line x1="32" y1="50" x2="32" y2="56"/><line x1="8" y1="32" x2="14" y2="32"/><line x1="50" y1="32" x2="56" y2="32"/><line x1="15" y1="15" x2="19" y2="19"/><line x1="45" y1="45" x2="49" y2="49"/><line x1="15" y1="49" x2="19" y2="45"/><line x1="45" y1="19" x2="49" y2="15"/></g></svg>',
+        'partly-cloudy': '<svg viewBox="0 0 64 64" class="weather-svg"><circle cx="22" cy="22" r="10" fill="#ffcb05"/><g stroke="#ffcb05" stroke-width="2" stroke-linecap="round"><line x1="22" y1="5" x2="22" y2="9"/><line x1="22" y1="35" x2="22" y2="39"/><line x1="5" y1="22" x2="9" y2="22"/><line x1="35" y1="22" x2="39" y2="22"/><line x1="10" y1="10" x2="13" y2="13"/><line x1="31" y1="31" x2="34" y2="34"/><line x1="10" y1="34" x2="13" y2="31"/><line x1="31" y1="13" x2="34" y2="10"/></g><ellipse cx="38" cy="42" rx="18" ry="12" fill="#74b9ff"/><ellipse cx="28" cy="38" rx="12" ry="10" fill="#74b9ff"/><ellipse cx="48" cy="40" rx="10" ry="8" fill="#74b9ff"/></svg>',
+        cloudy: '<svg viewBox="0 0 64 64" class="weather-svg"><ellipse cx="32" cy="38" rx="22" ry="14" fill="#74b9ff"/><ellipse cx="20" cy="32" rx="14" ry="12" fill="#74b9ff"/><ellipse cx="44" cy="34" rx="12" ry="10" fill="#74b9ff"/><ellipse cx="32" cy="28" rx="10" ry="8" fill="#a8d4ff"/></svg>',
+        fog: '<svg viewBox="0 0 64 64" class="weather-svg"><g stroke="#74b9ff" stroke-width="4" stroke-linecap="round" opacity="0.7"><line x1="10" y1="24" x2="54" y2="24"/><line x1="14" y1="34" x2="50" y2="34"/><line x1="10" y1="44" x2="54" y2="44"/></g></svg>',
+        drizzle: '<svg viewBox="0 0 64 64" class="weather-svg"><ellipse cx="32" cy="24" rx="18" ry="12" fill="#74b9ff"/><ellipse cx="22" cy="20" rx="12" ry="10" fill="#74b9ff"/><ellipse cx="42" cy="22" rx="10" ry="8" fill="#74b9ff"/><g stroke="#6890f0" stroke-width="2" stroke-linecap="round"><line x1="20" y1="40" x2="18" y2="46"/><line x1="32" y1="42" x2="30" y2="48"/><line x1="44" y1="40" x2="42" y2="46"/><line x1="26" y1="50" x2="24" y2="56"/><line x1="38" y1="50" x2="36" y2="56"/></g></svg>',
+        rain: '<svg viewBox="0 0 64 64" class="weather-svg"><ellipse cx="32" cy="22" rx="18" ry="12" fill="#74b9ff"/><ellipse cx="22" cy="18" rx="12" ry="10" fill="#74b9ff"/><ellipse cx="42" cy="20" rx="10" ry="8" fill="#74b9ff"/><g stroke="#3466af" stroke-width="3" stroke-linecap="round"><line x1="18" y1="38" x2="14" y2="50"/><line x1="30" y1="40" x2="26" y2="52"/><line x1="42" y1="38" x2="38" y2="50"/><line x1="50" y1="42" x2="48" y2="50"/></g></svg>',
+        snow: '<svg viewBox="0 0 64 64" class="weather-svg"><ellipse cx="32" cy="22" rx="18" ry="12" fill="#74b9ff"/><ellipse cx="22" cy="18" rx="12" ry="10" fill="#74b9ff"/><ellipse cx="42" cy="20" rx="10" ry="8" fill="#74b9ff"/><g fill="#ffffff"><circle cx="18" cy="42" r="3"/><circle cx="32" cy="46" r="3"/><circle cx="46" cy="42" r="3"/><circle cx="24" cy="54" r="3"/><circle cx="40" cy="54" r="3"/></g></svg>',
+        storm: '<svg viewBox="0 0 64 64" class="weather-svg"><ellipse cx="32" cy="20" rx="18" ry="12" fill="#74b9ff"/><ellipse cx="22" cy="16" rx="12" ry="10" fill="#74b9ff"/><ellipse cx="42" cy="18" rx="10" ry="8" fill="#74b9ff"/><polygon points="34,30 28,42 34,42 30,56 42,40 36,40 42,30" fill="#ffcb05"/><g stroke="#3466af" stroke-width="2" stroke-linecap="round"><line x1="16" y1="36" x2="14" y2="44"/><line x1="48" y1="36" x2="46" y2="44"/></g></svg>'
+    };
+
     // Days and months names
     var dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     var monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
@@ -204,6 +256,135 @@
         }, 100);
     }
 
+    // Update weather icon
+    function updateWeatherIcon(iconType) {
+        var icon = weatherIcons[iconType] || weatherIcons.sun;
+        weatherIconEl.innerHTML = icon;
+    }
+
+    // Get weather description and icon from code
+    function getWeatherInfo(code) {
+        return weatherCodes[code] || { desc: 'Unknown', icon: 'sun' };
+    }
+
+    // Round temperature to nearest integer
+    function roundTemp(temp) {
+        return Math.round(temp);
+    }
+
+    // Fetch weather from Open-Meteo API (free, no API key required)
+    function fetchWeather(latitude, longitude) {
+        var url = 'https://api.open-meteo.com/v1/forecast?' +
+            'latitude=' + latitude +
+            '&longitude=' + longitude +
+            '&current=temperature_2m,weather_code' +
+            '&daily=temperature_2m_max,temperature_2m_min' +
+            '&temperature_unit=fahrenheit' +
+            '&timezone=auto' +
+            '&forecast_days=1';
+
+        fetch(url)
+            .then(function(response) {
+                if (!response.ok) {
+                    throw new Error('Weather fetch failed');
+                }
+                return response.json();
+            })
+            .then(function(data) {
+                // Update current temperature
+                var currentTemp = roundTemp(data.current.temperature_2m);
+                weatherTempEl.textContent = currentTemp + '°F';
+
+                // Update weather condition and icon
+                var weatherInfo = getWeatherInfo(data.current.weather_code);
+                weatherConditionEl.textContent = weatherInfo.desc;
+                updateWeatherIcon(weatherInfo.icon);
+
+                // Update high/low from daily forecast
+                var highTemp = roundTemp(data.daily.temperature_2m_max[0]);
+                var lowTemp = roundTemp(data.daily.temperature_2m_min[0]);
+                weatherHighEl.textContent = 'H: ' + highTemp + '°';
+                weatherLowEl.textContent = 'L: ' + lowTemp + '°';
+
+                console.log('Weather updated successfully');
+            })
+            .catch(function(error) {
+                console.log('Weather fetch error:', error);
+                weatherConditionEl.textContent = 'Weather unavailable';
+            });
+    }
+
+    // Reverse geocode to get location name
+    function getLocationName(latitude, longitude) {
+        // Using Open-Meteo's geocoding in reverse via a simple approach
+        // We'll use a free reverse geocoding API
+        var url = 'https://nominatim.openstreetmap.org/reverse?' +
+            'lat=' + latitude +
+            '&lon=' + longitude +
+            '&format=json';
+
+        fetch(url, {
+            headers: {
+                'User-Agent': 'PokemonClock/1.0'
+            }
+        })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                var city = data.address.city ||
+                           data.address.town ||
+                           data.address.village ||
+                           data.address.county ||
+                           data.address.state ||
+                           'Unknown Location';
+                weatherLocationEl.textContent = city;
+            })
+            .catch(function(error) {
+                // Fallback to coordinates if geocoding fails
+                weatherLocationEl.textContent = latitude.toFixed(2) + '°, ' + longitude.toFixed(2) + '°';
+            });
+    }
+
+    // Get user's location and fetch weather
+    function initWeather() {
+        if ('geolocation' in navigator) {
+            weatherLocationEl.textContent = 'Getting location...';
+
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    var lat = position.coords.latitude;
+                    var lon = position.coords.longitude;
+
+                    // Fetch weather data
+                    fetchWeather(lat, lon);
+
+                    // Get location name
+                    getLocationName(lat, lon);
+
+                    // Refresh weather every 15 minutes
+                    setInterval(function() {
+                        fetchWeather(lat, lon);
+                    }, 15 * 60 * 1000);
+                },
+                function(error) {
+                    console.log('Geolocation error:', error);
+                    weatherLocationEl.textContent = 'Location access denied';
+                    weatherConditionEl.textContent = 'Enable location for weather';
+                    weatherTempEl.textContent = '--°';
+                },
+                {
+                    enableHighAccuracy: false,
+                    timeout: 10000,
+                    maximumAge: 300000 // Cache location for 5 minutes
+                }
+            );
+        } else {
+            weatherLocationEl.textContent = 'Geolocation not supported';
+            weatherConditionEl.textContent = 'Weather unavailable';
+        }
+    }
+
     // Initialize
     function init() {
         // Register service worker for offline support
@@ -221,6 +402,9 @@
 
         // Render calendar
         renderCalendar();
+
+        // Initialize weather
+        initWeather();
 
         // Event listeners for calendar navigation
         prevMonthBtn.addEventListener('click', prevMonth);

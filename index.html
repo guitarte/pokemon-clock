@@ -37,6 +37,35 @@
                 <div class="date-display" id="date-display">Loading...</div>
             </section>
 
+            <section class="weather-section">
+                <div class="weather-content">
+                    <div class="weather-icon" id="weather-icon">
+                        <svg viewBox="0 0 64 64" class="weather-svg" id="weather-svg">
+                            <circle cx="32" cy="32" r="14" fill="#ffcb05"/>
+                            <g class="sun-rays">
+                                <line x1="32" y1="8" x2="32" y2="14" stroke="#ffcb05" stroke-width="3" stroke-linecap="round"/>
+                                <line x1="32" y1="50" x2="32" y2="56" stroke="#ffcb05" stroke-width="3" stroke-linecap="round"/>
+                                <line x1="8" y1="32" x2="14" y2="32" stroke="#ffcb05" stroke-width="3" stroke-linecap="round"/>
+                                <line x1="50" y1="32" x2="56" y2="32" stroke="#ffcb05" stroke-width="3" stroke-linecap="round"/>
+                                <line x1="15" y1="15" x2="19" y2="19" stroke="#ffcb05" stroke-width="3" stroke-linecap="round"/>
+                                <line x1="45" y1="45" x2="49" y2="49" stroke="#ffcb05" stroke-width="3" stroke-linecap="round"/>
+                                <line x1="15" y1="49" x2="19" y2="45" stroke="#ffcb05" stroke-width="3" stroke-linecap="round"/>
+                                <line x1="45" y1="19" x2="49" y2="15" stroke="#ffcb05" stroke-width="3" stroke-linecap="round"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <div class="weather-info">
+                        <div class="weather-temp" id="weather-temp">--°</div>
+                        <div class="weather-condition" id="weather-condition">Loading...</div>
+                        <div class="weather-details">
+                            <span class="weather-high" id="weather-high">H: --°</span>
+                            <span class="weather-low" id="weather-low">L: --°</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="weather-location" id="weather-location">Fetching location...</div>
+            </section>
+
             <section class="calendar-section">
                 <div class="calendar-header">
                     <button class="nav-btn" id="prev-month">&lt;</button>
