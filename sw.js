@@ -1,5 +1,5 @@
 /* Service Worker for Pokemon Clock - Offline Support */
-var CACHE_NAME = 'pokemon-clock-v1';
+var CACHE_NAME = 'pokemon-clock-v2';
 var urlsToCache = [
     './',
     './index.html',
@@ -43,6 +43,23 @@ self.addEventListener('activate', function(event) {
 
 // Fetch event - serve from cache, fallback to network
 self.addEventListener('fetch', function(event) {
+    var requestUrl = new URL(event.request.url);
+
+    // For external API requests (weather, geocoding), always use network-first
+    if (requestUrl.hostname === 'api.open-meteo.com' ||
+        requestUrl.hostname === 'nominatim.openstreetmap.org') {
+        event.respondWith(
+            fetch(event.request).catch(function() {
+                // Return empty response for API failures when offline
+                return new Response(JSON.stringify({ error: 'offline' }), {
+                    headers: { 'Content-Type': 'application/json' }
+                });
+            })
+        );
+        return;
+    }
+
+    // For local assets, use cache-first strategy
     event.respondWith(
         caches.match(event.request)
             .then(function(response) {
